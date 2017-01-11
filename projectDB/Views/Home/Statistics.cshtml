@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Statistics";
+}
+
+@model List<projectDB.Models.Crime>
+
+<h2>Statystyki</h2>
+
+<p>10 przestępst popełnionych w Harbor</p>
+
+<table class="table">
+    <tr>
+        <th>DATA popełnienia przestępstwa</th>
+        <th>Rejon</th>
+        <th>Opis</th>
+        <th>Ulica</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.DateRptd</td>
+            <td>@item.AreaName</td>
+            <td>@item.CrmCdDesc</td>
+            <td>@item.Location</td>
+        </tr>
+    }
+
+</table>

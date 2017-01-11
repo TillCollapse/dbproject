@@ -14,6 +14,7 @@ namespace projectDB.Models
         {
             
         }
+        [BsonId]
         public ObjectId Id;
         [BsonElement("DateRptd")]
         public string DateRptd;

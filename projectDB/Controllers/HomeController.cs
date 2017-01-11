@@ -1,5 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Messaging;
+using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using projectDB.Models;
 using IAsyncCursorSourceExtensions = MongoDB.Driver.IAsyncCursorSourceExtensions;
@@ -13,7 +16,7 @@ namespace projectDB.Controllers
 
         public HomeController()
         {
-            var client = new MongoClient(new MongoClientSettings {Server = new MongoServerAddress("localhost", 3979)});
+            var client = new MongoClient(new MongoClientSettings { Server = new MongoServerAddress("localhost", 3979) });
             _database = client.GetDatabase("dvproject");
         }
 
@@ -36,16 +39,47 @@ namespace projectDB.Controllers
             return View();
         }
 
+        public ActionResult Statistics()
+        {
+            var collection = _database.GetCollection<Crime>("crimes");
+            var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
+            var getCrimes =
+                IAsyncCursorSourceExtensions.ToList(IMongoCollectionExtensions.Find(collection, filter).Limit(1000));
+
+            //return new JavaScriptSerializer().Serialize(getCrimes);
+
+            return View(getCrimes);
+        }
+
+        
+
         /*
          * CRUD operations
          */
 
         //create
-        public void CreateCrime()
+        public void CreateCrime(int docNumber)
         {
             var collection = _database.GetCollection<Crime>("crimes");
-            var crime = new Crime();
-            collection.InsertOne(crime);
+
+            collection.InsertOne(new Crime()
+            {
+                Id = ObjectId.GenerateNewId(),
+                DateRptd = "01/01/2016",
+                DrNo = 1,
+                DateOcc = "01/01/2016",
+                TimeOcc = 1,
+                Area = 1,
+                AreaName = "Cracov",
+                CrmCd = 1,
+                Rd = 1,
+                CrmCdDesc = "1",
+                Status = "fail",
+                StatusDesc = "fail",
+                Location = "Cracov",
+                CrossStreeet = "Blabla",
+                Location1 = "Cracov1"
+            });
         }
 
         //read
@@ -69,11 +103,14 @@ namespace projectDB.Controllers
         }
 
         //delete - removes documents that match the specified condition
-        public void DeleteCrime(string id)
+        public void DeleteCrime()
         {
             var collection = _database.GetCollection<Crime>("crimes");
-            var filter = Builders<Crime>.Filter.Eq("_id", id);
-            collection.DeleteOne(filter);
+            var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
+            collection.DeleteMany(filter);
         }
+
+        
+        
     }
 }
