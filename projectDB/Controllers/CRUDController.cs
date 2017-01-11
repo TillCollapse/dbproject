@@ -29,14 +29,23 @@ namespace projectDB.Controllers
             //return Json("chamara", JsonRequestBehavior.AllowGet);
             return View();
         }
-        public ActionResult RunCRUDTest()
+        public JsonResult RunCRUDTest()
         {
             var collection = _database.GetCollection<Crime>("crimes");
-            int[] insertNumbers = new int[] { 100, 1000, 10000 };
-            float[] createResults = MongoCreateTest(collection, insertNumbers);
-            //return Json("chamara", JsonRequestBehavior.AllowGet);
-            return View();
+            int[] operationsNumbers = new int[] { 100, 1000, 10000 };
+            //float[] mongoCreateResults = MongoCreateTest(collection, insertNumbers);
+            float[] mongoCreateResults = new float[] {43, 434, 3754};
+            
+            
+            //Tutaj powinienneś wsadzić swoje wyniki
+            float [] mySQLCreateResults = new float[] {80, 800, 8000};
+            return Json(new {
+                                operationsNumbers = operationsNumbers,
+                                mongoCreate = mongoCreateResults,
+                                mySQLCreate = mySQLCreateResults 
+                            }, JsonRequestBehavior.AllowGet); 
         }
+
         //Metoda testująca operację Crud dla 100, 1000, 10000, 10000 operacji
         public float[] MongoCrudTest()
         {

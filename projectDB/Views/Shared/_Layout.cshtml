@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -45,20 +45,5 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+<script src="../../Scripts/crudTestAndCharts.js" language=" javascript" type="text/javascript"></script>
 
-<script type="text/javascript">
-$( "runTest" ).click(function() { 
-        var a = "Test";
-        $.ajax({
-            url: "../../CRUD/CRUDTest",
-            type: "GET",
-            data: { a : a },
-            success: function (response) {
-                alert(response);
-            },
-            error: function (response) {
-                alert(response);
-            }
-        });
-    });
-</script>
