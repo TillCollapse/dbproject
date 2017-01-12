@@ -39,19 +39,19 @@ namespace projectDB.Controllers
             return View();
         }
 
-        public ActionResult Statistics()
+        public ActionResult Statistics(string value)
+        {
+            return View();
+        }
+
+        public ActionResult StatisticsResults(string value)
         {
             var collection = _database.GetCollection<Crime>("crimes");
             var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
             var getCrimes =
                 IAsyncCursorSourceExtensions.ToList(IMongoCollectionExtensions.Find(collection, filter).Limit(1000));
-
-            //return new JavaScriptSerializer().Serialize(getCrimes);
-
             return View(getCrimes);
         }
-
-        
 
         /*
          * CRUD operations

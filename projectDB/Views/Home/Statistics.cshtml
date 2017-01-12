@@ -2,13 +2,31 @@
     ViewBag.Title = "Statistics";
 }
 
-@model List<projectDB.Models.Crime>
+@*@model List<projectDB.Models.Crime>*@
+<div class="jumbotron">
+    <p class="lead">
+        Check it out how many crimes commited in specyfic area!!!
+    </p>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" class="form-control" id="arename" placeholder="e.g Cracov">
+                <span class="input-group-btn">
+                    <button id="checkItOut" class="btn btn-primary" type="button">check it out!</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div>
+    <div>
+        <h2 id="crimes_number"></h2>
+    </div>
+    
+    
+</div>
 
-<h2>Statystyki</h2>
 
-<p>10 przestępst popełnionych w Harbor</p>
-
-<table class="table">
+           
+@*<table class="table">
     <tr>
         <th>DATA popełnienia przestępstwa</th>
         <th>Rejon</th>
@@ -26,4 +44,4 @@
         </tr>
     }
 
-</table>
+</table>*@

@@ -16,14 +16,31 @@ $("#runTest").click(function () {
     });
 });
 
+$("#checkItOut").click(function () {
+    $.ajax({
+        url: "../../CRUD/Count?value=" + $("#arename").val(),
+        type: "GET",
+        data: null,
+        success: function (response) {
+            results = response;
+            $("#crimes_number").text(results);
+            alert('OK');
+        },
+        error: function (response) {
+            alert('BAD');
+        }
+    });
+});
 
-
+//function redirect() {
+//    window.location.href = '/Home/StatisticsResults?' + $("#arename").val();
+//}
 
 function drawCharts() {
     //Create Test
     drawOneChart('Create', 'create_div', results.operationsNumbers, results.mongoCreate, results.mySQLCreate);
-    //Remove Test
-    //drawOneChart('Remove', 'remove_div', results.operationsNumbers, results.mongoCreate, results.mySQLCreate);
+    //Read Test
+    drawOneChart('Read', 'read_div', results.operationsNumbers, results.Read, results.mySQLRead);
     //Update Test
     //drawOneChart('Update', 'update_div', results.operationsNumbers, results.mongoCreate, results.mySQLCreate);
     //Delete Test
