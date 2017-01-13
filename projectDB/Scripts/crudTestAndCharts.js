@@ -40,11 +40,11 @@ function drawCharts() {
     //Create Test
     drawOneChart('Create', 'create_div', results.operationsNumbers, results.mongoCreate, results.mySQLCreate);
     //Read Test
-    drawOneChart('Read', 'read_div', results.operationsNumbers, results.Read, results.mySQLRead);
+    drawOneChart('Read', 'read_div', results.operationsNumbers, results.mongoRead, results.mySQLRead);
     //Update Test
-    //drawOneChart('Update', 'update_div', results.operationsNumbers, results.mongoCreate, results.mySQLCreate);
+    drawOneChart('Update', 'update_div', results.operationsNumbers, results.mongoUpdate, results.mySQLCreate);
     //Delete Test
-    //drawOneChart('Delete', 'delete_div', results.operationsNumbers, results.mongoCreate, results.mySQLCreate);
+    drawOneChart('Delete', 'delete_div', results.operationsNumbers, results.mongoDelete, results.mySQLCreate);
 }
 
 function drawOneChart(testName, divId, opeartionNumber, mongoResults, mySQLResults) {

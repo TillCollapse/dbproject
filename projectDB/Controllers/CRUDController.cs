@@ -40,35 +40,37 @@ namespace projectDB.Controllers
         public JsonResult RunCRUDTest()
         {
             var collection = _database.GetCollection<Crime>("crimes");
-            int[] operationsNumbers = new int[] { 100, 1000, 10000 };
-            //orginal test
+            int[] operationsNumbers = new int[] { 10,100, 1000, 10000, 100000 };
+            //orginal mongo test
             //float[] mongoCreateResults = MongoCreateTest(collection, operationsNumbers);
+            //float[] mongoReadResults = MongoReadTest(collection, operationsNumbers);
+            //float[] mongoUpdateResults = MongoUpdateTest(collection, operationsNumbers);
             //float[] mongoDeleteResults = MongoRemoweTest(collection, operationsNumbers);
-            float[] mongoReadResults = MongoReadTest(collection, operationsNumbers);
-            float[] mongoCreateResults = new float[] {43, 434, 3754};
-            //float[] mongoDeleteResults = new float[] { 43, 434, 3754 };
+           
+            float[] mongoCreateResults = new float[] {65, 190 , 216, 1000, 8000};
+            float[] mongoReadResults = new float[] {1, 1, 1, 1, 1 };
+            float[] mongoUpdateResults = new float[] {1, 1, 1, 1, 1 };
+            float[] mongoDeleteResults = new float[] {1, 1, 1, 1, 1 };
             
-            //Tutaj powinienneś wsadzić swoje wyniki
-            float [] mySQLCreateResults = new float[] {80, 800, 8000};
+
+
+            //MySql tests wyniki do podmiany
+            float[] mySQLCreateResults = new float[] { 80, 800, 8000, 8000, 8000 };
+            float[] mySQLReadResults = new float[] { 1, 1, 1, 1, 1 };
+            float[] mySQLUpdateResults = new float[] { 1, 1, 1, 1, 1 };
+            float[] mySQLDeleteResults = new float[] { 1, 1, 1, 1, 1 };
+
             return Json(new {
                                 operationsNumbers = operationsNumbers,
                                 mongoCreate = mongoCreateResults,
-                                mySQLCreate = mySQLCreateResults 
-                            }, JsonRequestBehavior.AllowGet); 
-        }
+                                mongoRead = mongoReadResults,
+                                mongoUpdate = mongoUpdateResults,
+                                mongoDelete = mongoDeleteResults,
 
-        //Metoda testująca operację Crud dla 100, 1000, 10000, 10000 operacji
-        public float[] MongoCrudTest()
-        {
-
-            var collection = _database.GetCollection<Crime>("crimes");
-            //int[] insertNumbers = new int[] { 100, 1000, 10000, 100000 };
-            int[] insertNumbers = new int[] { 100, 1000, 10000 };
-
-            float[] createResults = MongoCreateTest(collection, insertNumbers);
-            float[] removeResults = MongoRemoweTest(collection, insertNumbers);
-
-            return removeResults;
+                                mySQLCreate = mySQLCreateResults, 
+                                mySQLRead = mySQLReadResults,
+                                mySQLmongoUpdate = mySQLUpdateResults,
+                                mySQLDelete = mySQLDeleteResults}, JsonRequestBehavior.AllowGet); 
         }
 
         private float[] MongoCreateTest(IMongoCollection<Crime> collection, int[] insertNumbers)
@@ -103,6 +105,9 @@ namespace projectDB.Controllers
             }
 
             return results;
+        }
+        private float[] MongoUpdateTest(IMongoCollection<Crime> collection, int[] operationsNumbers) { 
+            return new float [] {1,2,4};
         }
         private float[] MongoRemoweTest(IMongoCollection<Crime> collection, int[] operationsNumbers)
         {
@@ -147,7 +152,15 @@ namespace projectDB.Controllers
                 });
             }
         }
+        private void mongoUpdateOperation(IMongoCollection<Crime> collection, int insertNumber)
+        {
+            var updateCrime = Builders<Crime>.Update
+                .Set("CrossStreeet", "CrossStreeetUpdated")
+                .Set("DateRptd", "01/12/2016");
 
+            var filter = Builders<Crime>.Filter.Eq("Location", "Cracov");
+            collection.UpdateOne(filter, updateCrime);
+        }
         private void mongoRemoveOperation(IMongoCollection<Crime> collection, int insertNumber)
         {
             var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
@@ -156,10 +169,10 @@ namespace projectDB.Controllers
                 collection.DeleteOne(filter);
             }
         }
-
+       
         private void mongoReadOperation(IMongoCollection<Crime> collection, int operationNumber) {
             var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
-            collection.Find(filter).Limit(operationNumber);
+            var results = collection.Find(filter).Limit(operationNumber);
         }
 
     }
