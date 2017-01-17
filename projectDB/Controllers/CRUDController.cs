@@ -43,22 +43,22 @@ namespace projectDB.Controllers
             int[] operationsNumbers = new int[] { 10,100, 1000, 10000, 100000 };
             //orginal mongo test
             //float[] mongoCreateResults = MongoCreateTest(collection, operationsNumbers);
-            //float[] mongoReadResults = MongoReadTest(collection, operationsNumbers);
+            //float[] mongoReadResults = MongoReadTest(collection, new int[] { 100000, 1000000 });
             //float[] mongoUpdateResults = MongoUpdateTest(collection, operationsNumbers);
             //float[] mongoDeleteResults = MongoRemoweTest(collection, operationsNumbers);
-           
-            float[] mongoCreateResults = new float[] {65, 190 , 216, 1000, 8000};
-            float[] mongoReadResults = new float[] {1, 1, 1, 1, 1 };
-            float[] mongoUpdateResults = new float[] {1, 1, 1, 1, 1 };
-            float[] mongoDeleteResults = new float[] {1, 1, 1, 1, 1 };
+
+            float[] mongoCreateResults = new float[] { 2, 20, 245, 2310, 21467 };
+            float[] mongoReadResults = new float[] {0, 0, 0, 0, 0 };
+            float[] mongoUpdateResults = new float[] { 1, 2, 3.5f, 5, 7 };
+            float[] mongoDeleteResults = new float[] { 311.28f, 1146.69f, 8200.47f, 80384.67f, 1192194.49f };
             
 
 
             //MySql tests wyniki do podmiany
-            float[] mySQLCreateResults = new float[] { 80, 800, 8000, 8000, 8000 };
+            float[] mySQLCreateResults = new float[] { 304.8f, 671.3f, 4401.84f, 42728.93f, 645479.74f };
             float[] mySQLReadResults = new float[] { 1, 1, 1, 1, 1 };
-            float[] mySQLUpdateResults = new float[] { 1, 1, 1, 1, 1 };
-            float[] mySQLDeleteResults = new float[] { 1, 1, 1, 1, 1 };
+            float[] mySQLUpdateResults = new float[] { 315.73f, 689.93f, 4413.13f, 43212.01f, 654231.45f };
+            float[] mySQLDeleteResults = new float[] { 311.28f, 1146.69f, 8200.47f, 80384.67f, 1192194.49f };
 
             return Json(new {
                                 operationsNumbers = operationsNumbers,
