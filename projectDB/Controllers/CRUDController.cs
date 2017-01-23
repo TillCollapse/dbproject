@@ -42,23 +42,41 @@ namespace projectDB.Controllers
             var collection = _database.GetCollection<Crime>("crimes");
             int[] operationsNumbers = new int[] { 10,100, 1000, 10000, 100000 };
             //orginal mongo test
-            float[] mongoCreateResults = MongoCreateTest(collection, operationsNumbers);
-            float[] mongoReadResults = MongoReadTest(collection, operationsNumbers);
-            float[] mongoUpdateResults = MongoUpdateTest(collection, operationsNumbers);
-            float[] mongoDeleteResults = MongoRemoweTest(collection, operationsNumbers);
+            //float[] mongoCreateResults = MongoCreateTest(collection, operationsNumbers);
+            //float[] mongoReadResults = MongoReadTest(collection, operationsNumbers);
+            //float[] mongoUpdateResults = MongoUpdateTest(collection, operationsNumbers);
+            //float[] mongoDeleteResults = MongoRemoweTest(collection, operationsNumbers);
 
+            //wyniki u mnie
             //float[] mongoCreateResults = new float[] { 2, 25, 398, 3012, 23341 };
             //float[] mongoReadResults = new float[] { 0, 0, 0, 0, 0 };
             //float[] mongoUpdateResults = new float[] { 686, 638, 630, 637, 646 };
             //float[] mongoDeleteResults = new float[] { 635, 623, 660, 740, 1982 };
 
+            ////wyniki u Marcina
+            //float[] mongoCreateResults = new float[] { 3, 34, 405, 4331, 42947 };
+            //float[] mongoReadResults = new float[] { 0, 0, 0, 0, 0 };
+            //float[] mongoUpdateResults = new float[] { 1345, 1985, 1160, 1309, 1089 };
+            //float[] mongoDeleteResults = new float[] { 1139, 1100, 1256, 1383, 1982 };
 
+            ////MySql tests wyniki do podmiany
+            //float[] mySQLCreateResults = new float[] { 304.8f, 671.3f, 4401.84f, 42728.93f, 645479.74f };
+            //float[] mySQLReadResults = new float[] { 981.65f, 1067.71f, 985.65f, 908.60f, 881.58f };
+            //float[] mySQLUpdateResults = new float[] { 315.73f, 689.93f, 4413.13f, 43212.01f, 654231.45f };
+            //float[] mySQLDeleteResults = new float[] { 311.28f, 1146.69f, 8200.47f, 80384.67f, 1192194.49f };
+
+            //wyniki u Marcina
+            float[] mongoCreateResults = new float[] { 3, 34, 405, 4331};
+            float[] mongoReadResults = new float[] { 0, 0, 0, 0};
+            float[] mongoUpdateResults = new float[] { 1345, 1985, 1160, 1309 };
+            float[] mongoDeleteResults = new float[] { 1139, 1100, 1256, 1383 };
 
             //MySql tests wyniki do podmiany
-            float[] mySQLCreateResults = new float[] { 304.8f, 671.3f, 4401.84f, 42728.93f, 645479.74f };
-            float[] mySQLReadResults = new float[] { 1, 1, 1, 1, 1 };
-            float[] mySQLUpdateResults = new float[] { 315.73f, 689.93f, 4413.13f, 43212.01f, 654231.45f };
-            float[] mySQLDeleteResults = new float[] { 311.28f, 1146.69f, 8200.47f, 80384.67f, 1192194.49f };
+            float[] mySQLCreateResults = new float[] { 304.8f, 671.3f, 4401.84f, 42728.93f };
+            float[] mySQLReadResults = new float[] { 981.65f, 1067.71f, 985.65f, 908.60f };
+            float[] mySQLUpdateResults = new float[] { 315.73f, 689.93f, 4413.13f, 43212.01f};
+            float[] mySQLDeleteResults = new float[] { 311.28f, 1146.69f, 8200.47f, 80384.67f};
+
 
             return Json(new {
                                 operationsNumbers = operationsNumbers,
