@@ -42,16 +42,16 @@ namespace projectDB.Controllers
             var collection = _database.GetCollection<Crime>("crimes");
             int[] operationsNumbers = new int[] { 10,100, 1000, 10000, 100000 };
             //orginal mongo test
-            //float[] mongoCreateResults = MongoCreateTest(collection, operationsNumbers);
-            //float[] mongoReadResults = MongoReadTest(collection, new int[] { 100000, 1000000 });
-            //float[] mongoUpdateResults = MongoUpdateTest(collection, operationsNumbers);
-            //float[] mongoDeleteResults = MongoRemoweTest(collection, operationsNumbers);
+            float[] mongoCreateResults = MongoCreateTest(collection, operationsNumbers);
+            float[] mongoReadResults = MongoReadTest(collection, operationsNumbers);
+            float[] mongoUpdateResults = MongoUpdateTest(collection, operationsNumbers);
+            float[] mongoDeleteResults = MongoRemoweTest(collection, operationsNumbers);
 
-            float[] mongoCreateResults = new float[] { 2, 20, 245, 2310, 21467 };
-            float[] mongoReadResults = new float[] {0, 0, 0, 0, 0 };
-            float[] mongoUpdateResults = new float[] { 1, 2, 3.5f, 5, 7 };
-            float[] mongoDeleteResults = new float[] { 311.28f, 1146.69f, 8200.47f, 80384.67f, 1192194.49f };
-            
+            //float[] mongoCreateResults = new float[] { 2, 25, 398, 3012, 23341 };
+            //float[] mongoReadResults = new float[] { 0, 0, 0, 0, 0 };
+            //float[] mongoUpdateResults = new float[] { 686, 638, 630, 637, 646 };
+            //float[] mongoDeleteResults = new float[] { 635, 623, 660, 740, 1982 };
+
 
 
             //MySql tests wyniki do podmiany
@@ -106,8 +106,22 @@ namespace projectDB.Controllers
 
             return results;
         }
-        private float[] MongoUpdateTest(IMongoCollection<Crime> collection, int[] operationsNumbers) { 
-            return new float [] {1,2,4};
+        private float[] MongoUpdateTest(IMongoCollection<Crime> collection, int[] operationsNumbers) {
+            System.Diagnostics.Debug.WriteLine("**********UpdateTest**********");
+            float[] results = new float[operationsNumbers.Length];
+            for (int i = 0; i < operationsNumbers.Length; i++)
+            {
+                mongoRemoveOperation(collection);
+                mongoUpdateOperation(collection, operationsNumbers[i]);
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                mongoRemoveOperation(collection);
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                results[i] = elapsedMs;
+                System.Diagnostics.Debug.WriteLine(operationsNumbers[i] + "\t\t" + elapsedMs);
+            }
+
+            return results;
         }
         private float[] MongoRemoweTest(IMongoCollection<Crime> collection, int[] operationsNumbers)
         {
@@ -115,8 +129,10 @@ namespace projectDB.Controllers
             float[] results = new float[operationsNumbers.Length];
             for (int i = 0; i < operationsNumbers.Length; i++)
             {
+                mongoRemoveOperation(collection);
+                mongoInsertOperation(collection, operationsNumbers[i]);
                 var watch = System.Diagnostics.Stopwatch.StartNew();
-                mongoRemoveOperation(collection, operationsNumbers[i]);
+                mongoRemoveOperation(collection);
                 watch.Stop();
                 var elapsedMs = watch.ElapsedMilliseconds;
                 results[i] = elapsedMs;
@@ -154,26 +170,20 @@ namespace projectDB.Controllers
         }
         private void mongoUpdateOperation(IMongoCollection<Crime> collection, int insertNumber)
         {
-            var updateCrime = Builders<Crime>.Update
-                .Set("CrossStreeet", "CrossStreeetUpdated")
-                .Set("DateRptd", "01/12/2016");
-
-            var filter = Builders<Crime>.Filter.Eq("Location", "Cracov");
-            collection.UpdateOne(filter, updateCrime);
+            var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
+            var update = Builders<Crime>.Update.Set("AREANAME", "Warsaw");
+            collection.UpdateMany(filter, update);
         }
-        private void mongoRemoveOperation(IMongoCollection<Crime> collection, int insertNumber)
+        private void mongoRemoveOperation(IMongoCollection<Crime> collection)
         {
             var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
-            for (var i = 0; i < insertNumber; i++)
-            {
-                collection.DeleteOne(filter);
-            }
+            collection.DeleteMany(filter);
+            
         }
        
         private void mongoReadOperation(IMongoCollection<Crime> collection, int operationNumber) {
             var filter = Builders<Crime>.Filter.Eq("AREANAME", "Cracov");
             var results = collection.Find(filter).Limit(operationNumber);
         }
-
     }
 }

@@ -57,6 +57,8 @@ function drawOneChart(testName, divId, opeartionNumber, mongoResults, mySQLResul
         [{ v: opeartionNumber[0].toString(), f: 'Time' }, mongoResults[0], mySQLResults[0]],
         [{ v: opeartionNumber[1].toString(), f: 'Time' }, mongoResults[1], mySQLResults[1]],
         [{ v: opeartionNumber[2].toString(), f: 'Time' }, mongoResults[2], mySQLResults[2]],
+        [{ v: opeartionNumber[3].toString(), f: 'Time' }, mongoResults[3], mySQLResults[3]],
+        [{ v: opeartionNumber[4].toString(), f: 'Time' }, mongoResults[4], mySQLResults[4]]
         //[{v: "4", f: '11 am'}, results.mongoCreate[3], 2.25]
     ]);
 
